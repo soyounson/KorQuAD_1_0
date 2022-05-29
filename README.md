@@ -9,6 +9,10 @@
 
 #### KorQuad 1.0 ref : https://korquad.github.io/KorQuad%201.0/
 #### slides : https://www.slideshare.net/SeungyoungLim/korquad-introduction
+### ref : https://github.com/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb
+
+### ref: https://colab.research.google.com/github/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb
+
 
 ### ☺︎ 노트 정리
 most voted code를 분석하고 이해하는 작업을 수행함으로써, 문제/데이터/솔루션에 대한 이해를 한다. 
