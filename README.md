@@ -5,6 +5,9 @@
 **written by Soyoun Son**         
 **Date : 053122**
 
+### ☺︎ purpose
+기존에 Bert이용해서 KorQuAD 분석/예측한 것 (publicservant_AI(공무원 AI) [2])을 그대로 따라가면서 이해하는 작업을 수행한다. 
+
 ### ☺︎ KorQuAD란 [1]?
 The Korean Question Answering Dataset (KorQuAD)
 
@@ -45,10 +48,18 @@ KorQuAD 1.0의 전체 데이터는 1,560 개의 Wikipedia article에 대해 10,6
   - [x] Bert
   - [ ] Etc
   
-- [ ] ☺︎ Evaluation 
+- [x] ☺︎ Evaluation 
 
 -----------------------------------------------
-## 케라스로 KorQuAD 구현하기 [2]
+## 🦜 Pre-requests
+### ☺︎ Bert
+
+
+
+
+
+-----------------------------------------------
+## 🦦 케라스로 KorQuAD 구현하기 [2]
 publicservant_AI(공무원 AI)에서 구현한 Keras, BERT이용해서 KorQuAD를 구현해보고 이해하는 작업 
 
 > 이번 튜토리얼에서는 케라스와 BERT를 활용하여 KorQuAD를 구현해보고자 합니다. 이전에 배웠던 SQuAD와의 차이점은 단지 파일이 다르다는 점과, Tokenize를 정의할 때 네이버 한국어 영화 감성분석 할때처럼 새로운 Tokenize를 정의해서 한다는 점 말고는 SQuAD 랑 완전히 동일합니다.
@@ -59,28 +70,33 @@ publicservant_AI(공무원 AI)에서 구현한 Keras, BERT이용해서 KorQuAD�
 ### ☺︎ Bert 사전 설정 
 <img width="1164" alt="Screen Shot 2022-05-31 at 11 40 59" src="https://user-images.githubusercontent.com/40614421/171082189-5e2ccce0-3fd4-4d76-9a11-e4c8ff346cc2.png">
 
-- bert 훈련을 위한 사전 설정을 합니다. SEQ_LEN은 문장의 최대 길이입니다. SEQ_LEN 보다 문장의 길이가 작다면 남은 부분은 0이 채워지고, 만약에 SEQ_LEN보다 문장 길이가 길다면 SEQ_LEN을 초과하는 부분이 잘리게 됩니다. (본 문제에서는 메모리 문제 등으로 384로 정했습니다.)                
-- BATCH_SIZE는 메모리 초과 같은 문제를 방지하기 위해 작은 수인 10으로 정했습니다. 그리고 총 훈련 에포크 수는 1로 정했습니다. 학습율(LR;Learning rate)은 3e-5로 작게 정했습니다.
-- pretrained_path는 bert 사전학습 모형이 있는 폴더를 의미합니다.                
+- bert 훈련을 위한 사전 설정을 합니다. SEQ_LEN은 문장의 최대 길이입니다. SEQ_LEN 보다 문장의 길이가 작다면 남은 부분은 0이 채워지고, 만약에 SEQ_LEN보다 문장 길이가 길다면 SEQ_LEN을 초과하는 부분이 잘리게 됩니다. (본 문제에서는 메모리 문제 등으로 384로 정했습니다.)                                                             
+- BATCH_SIZE는 메모리 초과 같은 문제를 방지하기 위해 작은 수인 10으로 정했습니다. 그리고 총 훈련 에포크 수는 1로 정했습니다. 학습율(LR;Learning rate)은 3e-5로 작게 정했습니다.   
+                                                               
+- pretrained_path는 bert 사전학습 모형이 있는 폴더를 의미합니다.     
+                                             
 - 그리고 우리가 분석할 문장이 들어있는 칼럼의 제목인 document와 긍정인지 부정인지 알려주는 칼럼을 label로 정해줍니다.                
 
 ### ☺︎ Preprocessing : Tokenizer
 
 <img width="1169" alt="Screen Shot 2022-05-31 at 11 43 24" src="https://user-images.githubusercontent.com/40614421/171082440-91616fe8-fb3f-4764-9b01-15bf5d87d5e4.png">
-- vocab.txt에 있는 단어에 인덱스를 추가해주는 token_dict라는 딕셔너리를 생성합니다.                
-- 우리가 분석할 문장이 토큰화가 되고, 그 다음에는 인덱스(숫자)로 변경되어서 버트 신경망에 인풋으로 들어게 됩니다.                
+
+- vocab.txt에 있는 단어에 인덱스를 추가해주는 token_dict라는 딕셔너리를 생성합니다.                                                                            
+- 우리가 분석할 문장이 토큰화가 되고, 그 다음에는 인덱스(숫자)로 변경되어서 버트 신경망에 인풋으로 들어게 됩니다.                                                                      
 
 <img width="1167" alt="Screen Shot 2022-05-31 at 11 44 16" src="https://user-images.githubusercontent.com/40614421/171082548-8fc9c6f5-76f7-48ba-a1d1-b5061fc4294a.png">
-- BERT의 토큰화는 단어를 분리하는 토큰화 방식입니다. wordpiece(단어조각?) 방식이라고 하는데, 이는 한국어를 형태소로 꼭 변환해야 할 문제를 해결해주며, 의미가 있는 단어는 밀접하게 연관이 되게 하는 장점까지 갖추고 있습니다.                
-- 단어의 첫 시작은 ##가 붙지 않지만, 단어에 포함되면서 단어의 시작이 아닌 부분에는 ##가 붙는 것이 특징입니다.                
-- 네이버 감성분석에서 했던 것처럼, 한국어 감성분석에서는 새로 토크나이저 클래스를 상속을 받아서, 토크나이저를 재정의 해주어야 합니다.(그렇지 않으면 완전자모분리 현상 발생)                
+
+- BERT의 토큰화는 단어를 분리하는 토큰화 방식입니다. wordpiece(단어조각?) 방식이라고 하는데, 이는 한국어를 형태소로 꼭 변환해야 할 문제를 해결해주며, 의미가 있는 단어는 밀접하게 연관이 되게 하는 장점까지 갖추고 있습니다.                                                 
+- 단어의 첫 시작은 ##가 붙지 않지만, 단어에 포함되면서 단어의 시작이 아닌 부분에는 ##가 붙는 것이 특징입니다.                                                 
+- 네이버 감성분석에서 했던 것처럼, 한국어 감성분석에서는 새로 토크나이저 클래스를 상속을 받아서, 토크나이저를 재정의 해주어야 합니다.(그렇지 않으면 완전자모분리 현상 발생)                                                 
 (완전자모분리 : 자음과 모음이 분리되는 현상)                
 
 #### ☻ 토큰화 확인 
 <img width="1158" alt="Screen Shot 2022-05-31 at 11 46 46" src="https://user-images.githubusercontent.com/40614421/171082814-3893dcb1-77f1-45be-8775-ba422d9911eb.png">
-- 토큰화가 잘 되었는지 확인해 봅니다. 버트 모형은 문장 앞에 꼭 [CLS]라는 문자가 위치하고, [SEP]라는 문자가 끝에 위치합니다.                
+
+- 토큰화가 잘 되었는지 확인해 봅니다. 버트 모형은 문장 앞에 꼭 [CLS]라는 문자가 위치하고, [SEP]라는 문자가 끝에 위치합니다.                                                 
 ([CLS]는 문장의 시작, [SEP]는 문장의 끝을 의미합니다.)             
-- 위에서 언급했던 단어의 시작이 아닌 부분에 ##가 붙음 (예, '##어', '##큰', '##화', '##되', '##니')
+- 위에서 언급했던 단어의 시작이 아닌 부분에 ##가 붙음 (예, '##어', '##큰', '##화', '##되', '##니')                                 
 
 #### 🔍 (개념) 버트모형의 input  (내가 정리할 부분) 
 <img width="1092" alt="Screen Shot 2022-05-31 at 11 51 50" src="https://user-images.githubusercontent.com/40614421/171083307-67a1d2ab-a754-4c28-9623-66eca5c26d04.png">
@@ -194,10 +210,5 @@ train 데이터와 모양이 약간 다르기 때문에, 함수를 새로 정의
 
 [2] [publicservant_AI(공무원 AI)](https://github.com/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
 
-[2-1] [Colab:publicservant_AI(공무원 AI)] (https://colab.research.google.com/github/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
+[2-1] [Colab:publicservant_AI(공무원 AI)](https://colab.research.google.com/github/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
 
-
-https://github.com/monologg/KoBERT-KorQuAD
-https://github.com/y-rok/BERT-KorQuAD-dynamic-training
-https://github.com/lyeoni/KorQuAD
-https://github.sre.pub/kizoey/mrc-kobert-rtt
