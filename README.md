@@ -54,10 +54,21 @@ KorQuAD 1.0의 전체 데이터는 1,560 개의 Wikipedia article에 대해 10,6
 ## 🦜 Pre-requests
 ### ☺︎ Bert (Bidirectional Encoder Representations from Transformers)
 Bidirectional 은 양방향, Encoder은 입력값을 숫자의 형태로 바꾸는 모듈이라 Bert는 문맥을 양방향으로 이해해서 숫자의 형태로 바꿔주는 딥러닝 모델임. 
+
+<img width="719" alt="Screen Shot 2022-05-31 at 16 01 31" src="https://user-images.githubusercontent.com/40614421/171112076-12d95f31-7e0a-41de-8301-52a4356d11dd.png">
+
+
 Transformer는 2017년 구글에서 공개한 인코딩/디코딩 구조를 지닌 딥러닝 모델 
 
 
 
+
+
+
+### ☺︎ SQUAD 
+사실 SQUAD는 ANSWER를 다 예측하는 것이 아니라, ANSWER 중에서도 시작단어와 끝 단어만을 예측합니다. 시작과 끝을 알면 자연스럽게 가운데 위치한 글자들도 예측이 되는 것이겠지요. 그리고 SQUAD 문제를 풀기 위해서 BERT 알고리즘을 사용합니다.
+
+위 그림에서 SQUAD는 ANSWER를 다 예측하는 것이 아니라, ANSWER 중에서도 시작단어와 끝 단어만을 예측합니다. 시작과 끝을 알면 자연스럽게 가운데 위치한 글자들도 예측이 되는 것이겠지요. 그리고 SQUAD 문제를 풀기 위해서 BERT 알고리즘을 사용합니다.
 -----------------------------------------------
 ## 🦦 케라스로 KorQuAD 구현하기 [2]
 publicservant_AI(공무원 AI)에서 구현한 Keras, BERT이용해서 KorQuAD를 구현해보고 이해하는 작업 
@@ -206,9 +217,9 @@ train 데이터와 모양이 약간 다르기 때문에, 함수를 새로 정의
 
 
 ### ☺︎ Reference
-[1] [KorQuAD](https://korquad.github.io/KorQuad%201.0/)
-
-[2] [publicservant_AI(공무원 AI)](https://github.com/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
-
-[2-1] [Colab:publicservant_AI(공무원 AI)](https://colab.research.google.com/github/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
-
+- [1] [KorQuAD](https://korquad.github.io/KorQuad%201.0/)
+- [2] [publicservant_AI(공무원 AI)](https://github.com/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
+- [2-1] [Colab:publicservant_AI(공무원 AI)](https://colab.research.google.com/github/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
+- [3] [딥러닝 자연어처리 : BERT 이해하기](https://www.youtube.com/watch?v=30SvdoA6ApE)
+- [4] [BERT로 Q&A 구현해보기 With SQuAD AND KERAS](https://www.youtube.com/watch?v=LuApA264Wbs)
+- [4-1] [케라스로 Q&A 구현하기 w/ SQUAD](https://github.com/kimwoonggon/publicservant_AI/blob/master/(Uncased_Squad_V1_1)_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_Q%26A_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
