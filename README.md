@@ -52,23 +52,47 @@ KorQuAD 1.0의 전체 데이터는 1,560 개의 Wikipedia article에 대해 10,6
 
 -----------------------------------------------
 ## 🦜 Pre-requests
-### ☺︎ Bert (Bidirectional Encoder Representations from Transformers)
+### ☺︎ Bert (Bidirectional Encoder Representations from Transformers) [2,3]
 Bidirectional 은 양방향, Encoder은 입력값을 숫자의 형태로 바꾸는 모듈이라 Bert는 문맥을 양방향으로 이해해서 숫자의 형태로 바꿔주는 딥러닝 모델임. 
 
 <img width="719" alt="Screen Shot 2022-05-31 at 16 01 31" src="https://user-images.githubusercontent.com/40614421/171112076-12d95f31-7e0a-41de-8301-52a4356d11dd.png">
 
-
+Bert's model architecture is based on the encoder of transformer 
 Transformer는 2017년 구글에서 공개한 인코딩/디코딩 구조를 지닌 딥러닝 모델 
+여기서, Encoder는 양방향, Decoder는 왼쪽에서 오른쪽으로 처리하는 단방향 형태 
+
+- Encoder Attention : incorporate context from both direction 
+- Decoder Attention : incorporate context from only left side 
+
+<img width="500" alt="Screen Shot 2022-05-31 at 16 13 03" src="https://user-images.githubusercontent.com/40614421/171114075-c46dd464-0ffc-4d31-991d-0db7f7ef5213.png">
+
+<img width="349" alt="Screen Shot 2022-05-31 at 16 16 32" src="https://user-images.githubusercontent.com/40614421/171114695-54dff042-e2f7-4467-b91f-276e0c8f457a.png">
+
+- 사람이 labeling할 필요가 없음. 단순히 랜덤하게 단어 가려주고, 가려진 단어를 학습하게 하면 됨.
+- 한문장 뿐만 아니라 두문장을 입력받아서 학습이 가능함 (ex. Q&A : 따라서 우리가 KorQuAD에서 Bert를 사용할 수 있음) 
+토큰끼리의 상관관계 뿐만 아니라 문장간의 상관관계도 학습이 가능함
+- CLS ( a special token for classification) : 분류 테스크에 사용하기 위한 토큰으로 문장 전체가 하나의 벡터로 표현된 special token임
+- SEP ( a special token for separate two sentence is one input) : 두 문장을 구분하기 위한 토큰 
+- Bert는 WordPiece Embedding사용해서 문장을 토큰 단위로 분류. 단순히 띄어쓰기로 토큰 분류하는 것 보다 효과적으로 분류함
+#### ☻ Difference between traditional Language Model (LM) and Bert 
+Bert는 양방향 학습
+<img width="779" alt="Screen Shot 2022-05-31 at 16 18 36" src="https://user-images.githubusercontent.com/40614421/171115100-13fdd476-39c0-4d4c-8860-02262fbda5be.png">
+
+- 단방향 LM : 현재까지 읽은 단어를 통해 다음 단어 예측 (ex. GPT)
+- 양방향 LM : 동일한 문장을 그대로 학습하되, 가려진 단어 (masked token) 를 예측하도록 학습 (ex. BERT)
 
 
-
-
-
-
-### ☺︎ SQUAD 
+### ☺︎ SQUAD [3,3-1]
 사실 SQUAD는 ANSWER를 다 예측하는 것이 아니라, ANSWER 중에서도 시작단어와 끝 단어만을 예측합니다. 시작과 끝을 알면 자연스럽게 가운데 위치한 글자들도 예측이 되는 것이겠지요. 그리고 SQUAD 문제를 풀기 위해서 BERT 알고리즘을 사용합니다.
 
 위 그림에서 SQUAD는 ANSWER를 다 예측하는 것이 아니라, ANSWER 중에서도 시작단어와 끝 단어만을 예측합니다. 시작과 끝을 알면 자연스럽게 가운데 위치한 글자들도 예측이 되는 것이겠지요. 그리고 SQUAD 문제를 풀기 위해서 BERT 알고리즘을 사용합니다.
+
+
+#### ☻ results
+
+<img width="883" alt="Screen Shot 2022-05-31 at 16 10 11" src="https://user-images.githubusercontent.com/40614421/171113590-3c1a3b84-1bb2-40b7-a950-b1e8b55b95fc.png">
+
+
 -----------------------------------------------
 ## 🦦 케라스로 KorQuAD 구현하기 [2]
 publicservant_AI(공무원 AI)에서 구현한 Keras, BERT이용해서 KorQuAD를 구현해보고 이해하는 작업 
@@ -200,18 +224,6 @@ train 데이터와 모양이 약간 다르기 때문에, 함수를 새로 정의
 나무위키에서 데이터를 가져와서 질문을 해보겠습니다.
 
 <img width="1168" alt="Screen Shot 2022-05-31 at 12 28 24" src="https://user-images.githubusercontent.com/40614421/171086973-5169e4b4-d0ce-44d3-8054-d64a313a39c0.png">
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
