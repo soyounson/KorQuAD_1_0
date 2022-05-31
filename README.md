@@ -77,7 +77,7 @@ Bidirectional 은 양방향, Encoder은 입력값을 숫자의 형태로 바꾸�
 
 - Bert는 WordPiece Embedding사용해서 문장을 토큰 단위로 분류. 단순히 띄어쓰기로 토큰 분류하는 것 보다 효과적으로 분류함
 - 세그멘트 임베딩 : 두 문장 중 각각의 문장에 서로 다른 숫자를 더해주는 것으로 딥러닝에게 두개의 다른 문장이 있다는 것을 알려주는 목적 
-- 포지셔널 임베딩 : 토큰의 위치 알려줌, sin+cos function 사용
+- 포지셔널 임베딩 : 토큰의 위치 알려줌, sin+cos function 사용 (phase and values (-1~1)) 절대적 위치가 아닌 상대적 위치 이용
 
 <img width="932" alt="Screen Shot 2022-05-31 at 17 02 49" src="https://user-images.githubusercontent.com/40614421/171123586-9c1a3649-38e8-49f8-952e-1b74acc4fa88.png">
 
