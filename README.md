@@ -45,7 +45,6 @@ KorQuAD 1.0의 전체 데이터는 1,560 개의 Wikipedia article에 대해 10,6
   - [ ] FastText          
 
 - [x] ☺︎ Model
-  - [ ] Deep learning based models
   - [x] Bert
   - [ ] Etc
   
@@ -58,12 +57,11 @@ Bidirectional 은 양방향, Encoder은 입력값을 숫자의 형태로 바꾸�
 
 <img width="719" alt="Screen Shot 2022-05-31 at 16 01 31" src="https://user-images.githubusercontent.com/40614421/171112076-12d95f31-7e0a-41de-8301-52a4356d11dd.png">
 
-Bert's model architecture is based on the encoder of transformer 
-Transformer는 2017년 구글에서 공개한 인코딩/디코딩 구조를 지닌 딥러닝 모델 
-여기서, Encoder는 양방향, Decoder는 왼쪽에서 오른쪽으로 처리하는 단방향 형태 
-
-- Encoder Attention : incorporate context from both direction 
-- Decoder Attention : incorporate context from only left side 
+- Bert's model architecture is based on the encoder of transformer 
+- Transformer는 2017년 구글에서 공개한 인코딩/디코딩 구조를 지닌 딥러닝 모델 
+- 여기서, Encoder는 양방향, Decoder는 왼쪽에서 오른쪽으로 처리하는 단방향 형태 
+  - Encoder Attention : incorporate context from both direction 
+  - Decoder Attention : incorporate context from only left side 
 
 <img width="500" alt="Screen Shot 2022-05-31 at 16 13 03" src="https://user-images.githubusercontent.com/40614421/171114075-c46dd464-0ffc-4d31-991d-0db7f7ef5213.png">
 
@@ -74,7 +72,18 @@ Transformer는 2017년 구글에서 공개한 인코딩/디코딩 구조를 지�
 토큰끼리의 상관관계 뿐만 아니라 문장간의 상관관계도 학습이 가능함
 - CLS ( a special token for classification) : 분류 테스크에 사용하기 위한 토큰으로 문장 전체가 하나의 벡터로 표현된 special token임
 - SEP ( a special token for separate two sentence is one input) : 두 문장을 구분하기 위한 토큰 
+- 
+<img width="780" alt="Screen Shot 2022-05-31 at 17 02 01" src="https://user-images.githubusercontent.com/40614421/171123437-349954be-0684-4dea-b134-ec3460739b4a.png">
+
 - Bert는 WordPiece Embedding사용해서 문장을 토큰 단위로 분류. 단순히 띄어쓰기로 토큰 분류하는 것 보다 효과적으로 분류함
+- 세그멘트 임베딩 : 두 문장 중 각각의 문장에 서로 다른 숫자를 더해주는 것으로 딥러닝에게 두개의 다른 문장이 있다는 것을 알려주는 목적 
+- 포지셔널 임베딩 : 토큰의 위치 알려줌, sin+cos function 사용
+
+<img width="932" alt="Screen Shot 2022-05-31 at 17 02 49" src="https://user-images.githubusercontent.com/40614421/171123586-9c1a3649-38e8-49f8-952e-1b74acc4fa88.png">
+
+  - outputs different value for each position : 입력값에 따라 출력값의 위치가 달라짐 
+  - each position has patterned increasing and decreasing : 딥러닝 모델이 이 증/감을 통해서 입력값의 상대적 위치 파락
+  - no limit on input, no worry for longer sentences : 무한대 길이의 입력값도 상대적 위치를 출력이 가능함 (-1 <= output <= 1)
 
 #### ☻ Difference between traditional Language Model (LM) and Bert 
 Bert는 양방향 학습
@@ -82,6 +91,13 @@ Bert는 양방향 학습
 
 - 단방향 LM : 현재까지 읽은 단어를 통해 다음 단어 예측 (ex. GPT)
 - 양방향 LM : 동일한 문장을 그대로 학습하되, 가려진 단어 (masked token) 를 예측하도록 학습 (ex. BERT)
+
+<img width="704" alt="Screen Shot 2022-05-31 at 17 07 14" src="https://user-images.githubusercontent.com/40614421/171124387-cf7bb926-4453-4283-b8b9-02ef6826d179.png">
+
+GPT는 한번 학습시키는데 어마한 시간과 돈이 소요되는 반면 Bert는 상대적으로 시간과 돈이 소요. 하지만, Fine tuning을 개발자가 해줘야 하며 따로 시간과 돈이 소요됨
+#### ☻ 4 different fine tuning of Bert 
+
+![fine-tuning-BERT-in-different-tasks-Devlin-et-al-2019](https://user-images.githubusercontent.com/40614421/171124902-a029a26c-aeda-4136-8fa1-167b27435e50.png)
 
 ### ☺︎ SQUAD [3,3-1]
 - SQUAD는 ANSWER를 다 예측하는 것이 아니고,  ANSWER 중에서도 시작단어와 끝 단어만을 예측함
