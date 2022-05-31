@@ -109,7 +109,7 @@ SQUAD 문제에서 문장(context) 내에 text(정답)이 포함된다고 미리
 
 그래서 밑에 convert_data 함수에서, 정답(text) 길이만큼 문장(context)를 슬라이딩 하면서 만약에 문장이 정답을 포함하는 위치에 도달하면, 문장에서 정답의 맨 앞이 우리가 예측할 1번째 정답, 정답의 맨 뒤가 우리가 예측할 2번째 정답이 되게 됩니다.
 
-### ☺︎ Model 
+### ☺︎ Train the model 
 #### ☻ Input 
 이해가 안 가실 수 있는데, 버트 인풋을 문장으로 예를 들어 만들어 보겠습니다.
 인풋은 총 2개가 들어갑니다
@@ -147,15 +147,32 @@ Bert 모형의 마지막 입력을 받아서, (batch_size, 384, 768)의 텐서 �
 BERT 모델을 출력하는 함수를 지정합니다.
 start_answer, end_answer를 예측하게 됩니다.
 
+<img width="1168" alt="Screen Shot 2022-05-31 at 12 24 07" src="https://user-images.githubusercontent.com/40614421/171086581-83bd7f74-71ac-483a-88ac-721b4b47a455.png">
+
+버트 모형을 다시 훈련합니다.
+이번에는 validation_split을 입력하지 않아서 전체 데이터가 훈련 되도록 만들어 줍니다.
+
+<img width="1159" alt="Screen Shot 2022-05-31 at 12 25 09" src="https://user-images.githubusercontent.com/40614421/171086695-6b89fb72-847b-4c79-b650-b0b66fec02e8.png">
+
+### ☺︎ Predict w/ test datasets
+KorQUAD 데이터 셋에서 test 용도로 쓰이는 dev 파일을 PANDAS DATAFRAME 형식으로 불러오는 함수를 정의합니다.
+train 데이터와 모양이 약간 다르기 때문에, 함수를 새로 정의해야 합니다.
+#### ☻ Test data
+테스트 데이터확인 
+
+<img width="1160" alt="Screen Shot 2022-05-31 at 12 26 50" src="https://user-images.githubusercontent.com/40614421/171086854-4ecb41c9-1b1a-45fb-9358-fd074705eee1.png">
+
+#### ☻ Prediction 
+<img width="1173" alt="Screen Shot 2022-05-31 at 12 30 33" src="https://user-images.githubusercontent.com/40614421/171087202-c90f549e-c1f3-44b8-9601-4b586c00ce4e.png">
+
+<img width="1110" alt="Screen Shot 2022-05-31 at 12 31 00" src="https://user-images.githubusercontent.com/40614421/171087248-88ad242f-1fa9-48f0-9ac9-d42528d3686a.png">
 
 
+### ☺︎ Validation같지 않은 Validation? Test? whatever?
+한번 만들어진 BERT 모형에 질문을 해 볼까요?
+나무위키에서 데이터를 가져와서 질문을 해보겠습니다.
 
-
-
-
-
-
-
+<img width="1168" alt="Screen Shot 2022-05-31 at 12 28 24" src="https://user-images.githubusercontent.com/40614421/171086973-5169e4b4-d0ce-44d3-8054-d64a313a39c0.png">
 
 
 
@@ -177,11 +194,7 @@ start_answer, end_answer를 예측하게 됩니다.
 
 [2] [publicservant_AI(공무원 AI)](https://github.com/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
 
-
-Slides : https://www.slideshare.net/SeungyoungLim/korquad-introduction
-### ref : https://github.com/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb
-
-### ref: https://colab.research.google.com/github/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb
+[2-1] [Colab:publicservant_AI(공무원 AI)] (https://colab.research.google.com/github/kimwoonggon/publicservant_AI/blob/master/05_%EC%BC%80%EB%9D%BC%EC%8A%A4%EB%A1%9C_KorQuAD(%ED%95%9C%EA%B5%AD%EC%96%B4_Q%26A)_%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0.ipynb)
 
 
 https://github.com/monologg/KoBERT-KorQuAD
