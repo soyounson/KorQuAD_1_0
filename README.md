@@ -52,9 +52,9 @@ KorQuAD 1.0의 전체 데이터는 1,560 개의 Wikipedia article에 대해 10,6
 
 -----------------------------------------------
 ## 🦜 Pre-requests
-### ☺︎ Bert
-
-
+### ☺︎ Bert (Bidirectional Encoder Representations from Transformers)
+Bidirectional 은 양방향, Encoder은 입력값을 숫자의 형태로 바꾸는 모듈이라 Bert는 문맥을 양방향으로 이해해서 숫자의 형태로 바꿔주는 딥러닝 모델임. 
+Transformer는 2017년 구글에서 공개한 인코딩/디코딩 구조를 지닌 딥러닝 모델 
 
 
 
