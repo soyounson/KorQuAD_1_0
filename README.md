@@ -6,7 +6,9 @@
 **Date : 053122**
 
 ### ☺︎ Purpose
-기존에 Bert이용해서 KorQuAD 분석/예측한 것 (publicservant_AI(공무원 AI) [2])을 그대로 따라가면서 이해하는 작업을 수행한다. 
+- publicservant_AI(공무원 AI) [2]이 Bert 이용해서 KorQuAD1.0을 분석/예측 한것을 그대로 따라가면서 이해하는 작업을 수행한다.                        
+- 모든 과정은 [2,2-1]에 기록되어 있다.                         
+- 이 글은 처음으로 KorQUAD를 처음 접하는 입장에서 이해하고 배우는 것을 목표로 한다.                         
 
 ### ☺︎ KorQuAD란 [1]?
 - The Korean Question Answering Dataset (KorQuAD)
